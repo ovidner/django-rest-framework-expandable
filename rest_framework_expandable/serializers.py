@@ -37,12 +37,8 @@ class ExpandableSerializerMixin(object):
 
         expandable_fields = getattr(self.Meta, 'expandable_fields', {})
 
-        if self.expanded_fields and not expandable_fields:
-            raise InvalidExpansion(_('Undefined or disallowed field expansion '
-                                     'requested.'))
-
         for field, child_expansions in parse_expansions(self.expanded_fields).items():
-            if field not in expandable_fields:
+            if not expandable_fields or field not in expandable_fields:
                 raise InvalidExpansion(_('The field {} does not allow '
                                          'expansion.'.format(field)))
 
