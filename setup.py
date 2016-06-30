@@ -1,11 +1,9 @@
 from __future__ import absolute_import, unicode_literals
 from setuptools import setup, find_packages
 
-from rest_framework_expandable import __version__ as version
-
 setup(
     name='django-rest-framework-expandable',
-    version=version,
+    version='0.0.2',
     description='Mixins for DRF to allow expansion of fields.',
     long_description='',
     author='Olle Vidner',
