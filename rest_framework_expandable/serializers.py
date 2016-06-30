@@ -37,13 +37,15 @@ class ExpandableSerializerMixin(object):
 
         expandable_fields = getattr(self.Meta, 'expandable_fields', {})
 
-        for field, child_expansions in parse_expansions(self.expanded_fields).items():
+        for field, child_expansions in parse_expansions(
+                self.expanded_fields).items():
             if not expandable_fields or field not in expandable_fields:
                 raise InvalidExpansion(_('The field {} does not allow '
                                          'expansion.'.format(field)))
 
             # NOTE: serializer_kwargs is a reference
-            serializer, serializer_args, serializer_kwargs = expandable_fields[field]
+            serializer, serializer_args, serializer_kwargs = expandable_fields[
+                field]
 
             if isinstance(serializer, text_type):
                 serializer = load_serializer(serializer)
@@ -56,4 +58,5 @@ class ExpandableSerializerMixin(object):
 
                 serializer_kwargs['expand'] = child_expansions
 
-            self.fields[field] = serializer(*serializer_args, **serializer_kwargs)
+            self.fields[field] = serializer(*serializer_args,
+                                            **serializer_kwargs)
