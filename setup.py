@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-rest-framework-expandable',
-    version='0.0.2',
+    version='0.0.3',
     description='Mixins for DRF to allow expansion of fields.',
     long_description='',
     author='Olle Vidner',
