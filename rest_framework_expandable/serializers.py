@@ -22,10 +22,22 @@ def parse_expansions(items):
     return expansions
 
 
-def load_serializer(path_str):
-    module_path, serializer_name = path_str.rsplit('.', 1)
+def load_serializer(path, package):
+    relative = False
+    if path.startswith('.'):
+        relative = True
 
-    module = import_module(module_path)
+    split_path = path.rsplit('.', 1)
+    if len(split_path) == 1:
+        module_path = '.'
+        serializer_name = split_path[0]
+    elif split_path[0] == '':
+        module_path = '.'
+        serializer_name = split_path[1]
+    else:
+        module_path, serializer_name = split_path
+
+    module = import_module(module_path, package)
     return getattr(module, serializer_name)
 
 
@@ -48,7 +60,8 @@ class ExpandableSerializerMixin(object):
                 field]
 
             if isinstance(serializer, text_type):
-                serializer = load_serializer(serializer)
+                package = self.__module__
+                serializer = load_serializer(serializer, package)
 
             if child_expansions:
                 # serializer_kwargs is a *reference* to the dict in
