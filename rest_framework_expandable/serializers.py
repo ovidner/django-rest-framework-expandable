@@ -64,6 +64,14 @@ class ExpandableSerializerMixin(object):
                 serializer = load_serializer(serializer, package)
 
             if child_expansions:
+                # Nested expansions are a bad idea if the serializer isn't
+                # expandable. It will raise a rather unhelpful exception, so
+                # let's help a bit instead.
+                if not issubclass(serializer, ExpandableSerializerMixin):
+                    raise InvalidExpansion(
+                        _('The field {} does not allow nested '
+                          'expansions.'.format(field)))
+
                 # serializer_kwargs is a *reference* to the dict in
                 # expandable_fields. We must make a copy to not mess things up
                 # real bad. For performance, we only do it now when we have to.
