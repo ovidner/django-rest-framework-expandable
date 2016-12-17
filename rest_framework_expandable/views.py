@@ -5,13 +5,12 @@ from django.utils.translation import ugettext_lazy as _
 from .exceptions import InvalidExpansion
 
 
-ALLOWED_ACTIONS = ['list', 'retrieve', 'metadata']
-
-
 class ExpandableViewMixin(object):
+    expandable_actions = ['list', 'retrieve', 'metadata']
+
     @property
     def _is_allowed_to_expand(self):
-        return self.action in ALLOWED_ACTIONS
+        return self.action in self.expandable_actions
 
     def initial(self, request, *args, **kwargs):
         super(ExpandableViewMixin, self).initial(request, *args, **kwargs)
