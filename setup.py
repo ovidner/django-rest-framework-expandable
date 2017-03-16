@@ -1,5 +1,5 @@
 from __future__ import absolute_import, unicode_literals
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='djangorestframework-expandable',
@@ -12,7 +12,7 @@ setup(
         'rest_framework_expandable'
     ],
     install_requires=[
-        'django',
+        'Django',
         'djangorestframework',
         'six'
     ]
